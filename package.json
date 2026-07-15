@@ -1,0 +1,13 @@
+{
+  "name": "bangkok-fire-priority-map",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm --dir apps/web dev",
+    "dev:api": "cd apps/api && uv run fastapi dev main.py",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f db",
+    "db:reset": "docker compose down -v"
+  }
+}

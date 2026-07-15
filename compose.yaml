@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgis/postgis:17-3.5
+    container_name: bangkok-fire-postgis
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: fire_priority
+      POSTGRES_USER: fire_app
+      POSTGRES_PASSWORD: local_dev_password
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - fire_priority_pgdata:/var/lib/postgresql/data
+      - ./infra/db/init:/docker-entrypoint-initdb.d:ro
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U fire_app -d fire_priority"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  fire_priority_pgdata:
